@@ -13,7 +13,7 @@ utils_comp_createCompressedVersion(
 
     // it could be an array, for this
     // example it is just one file as string
-    '../client-src/js/jQuery.js',
+    $source = '../client-src/js/jQuery.js',
 
     // destination file - ti will create
     // jQuery.js.src.deflate
@@ -25,4 +25,18 @@ utils_comp_createCompressedVersion(
     // all inside client/js folder
     '../client/js/jQuery.js'
 );
+
+// here it is possible to add code in order to show, if necessary, the used surce code
+// let's say we use this builder as script src in the layout
+// in this way we'll always have an updated build plus the updated code
+
+//* remove a slash before this comment to avoid its execution
+header('Content-Type: text/javascript');
+utils_comp_noCache();
+if(!is_array($source))
+    $source = array($source);
+$source = array_map('utils_comp_readFile', $source);
+echo implode(PHP_EOL, $source);
+//*/
+
 ?>

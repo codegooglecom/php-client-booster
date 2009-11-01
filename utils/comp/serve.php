@@ -83,7 +83,7 @@ function utils_comp_serveFile($dest){
     // the unique ETag without performing any costly operation (e.g. sha1)
     // the hash has been created before and the file length will be 40bytes
     // a small file which 99.9% will be simply stored in the hard disk buffer
-    $hash = '"'.utils_comp_readFile($dest.'.sha1.'.$ext).'"';
+    $hash = utils_comp_readFile($dest.'.sha1.'.$ext);
     switch(true){
         // the browser has already downloaded this file?
         case $HINM === $hash:

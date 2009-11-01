@@ -1,0 +1,50 @@
+<script type="text/javascript">
+onload = function(){    
+    for(var
+        bench = {
+            cache:false,
+            result:{},
+            queue:[],
+            frame:document.getElementsByTagName("iframe")[0],
+            target:document.getElementById("result"),
+            add:function(info){this.queue.push(info)},
+            onload:function(){
+                bench.result[bench.current.name][0] = new Date - bench.result[bench.current.name][0];
+                bench.start(--bench.i);
+            },
+            start:function(){
+                if(!this.queue.length && !this.i)
+                    return this.stop();
+                if(!this.i){
+                    this.i = 10;
+                    this.current = this.queue.shift();
+                    this.result[this.current.name] = [];
+                    this.frame.onload = this.onload;
+                };
+                this.result[this.current.name].unshift(new Date);
+                this.frame.src = this.cache ? this.current.src : this.current.src + "_=" + Math.random();
+            },
+            stop:function(){
+                for(var k in this.result){
+                    for(var avg = 0, i = 0, length = this.result[k].length; i < length; ++i)
+                        avg += this.result[k][i]
+                    ;
+                    this.target.innerHTML += k.concat(new Array(51).join(" ")).slice(0, 50) + (avg/length).toFixed(2) + "ms<br />";
+                }
+            }
+        },
+        info = [
+            {src:"../client/?file=js/jQuery.js&",name:"PHP Client Booster"},
+            {src:"../client/js/jQuery.js.src.txt?",name:"Plain Text"},
+            {src:"jQuery.php?",name:"ob_start('ob_gzhandler')"}
+        ],
+        i = 0, length = info.length;
+        i < length; ++i
+    )
+        bench.add(info[i])
+    ;
+    bench.start();
+};
+</script>
+<iframe></iframe>
+<pre id="result"></pre>
