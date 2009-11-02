@@ -53,6 +53,17 @@ if(function_exists('file_get_contents')){
 }
 
 /** utils_comp_serveFile
+ * @description     easy way to avoid cached content (not used but may be useful)
+ */
+function utils_comp_noCache(){
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+    header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache');
+}
+
+/** utils_comp_serveFile
  * @description     the fastest way to handle a 304 response, creating conditions
  *                  to force 304 for every other request.
  * @param       string      a generic file name that has been parsed via create.php functions.
@@ -83,7 +94,7 @@ function utils_comp_serveFile($dest){
     // the unique ETag without performing any costly operation (e.g. sha1)
     // the hash has been created before and the file length will be 40bytes
     // a small file which 99.9% will be simply stored in the hard disk buffer
-    $hash = utils_comp_readFile($dest.'.sha1.'.$ext);
+    $hash = '"'.utils_comp_readFile($dest.'.sha1.'.$ext).'"';
     switch(true){
         // the browser has already downloaded this file?
         case $HINM === $hash:

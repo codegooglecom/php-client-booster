@@ -1,4 +1,4 @@
-<?php ob_start('ob_gzhandler'); ?>
+<?php ob_start('ob_gzhandler'); header('Content-Type: text/javascript'); ?>
 /*
  * jQuery JavaScript Library v1.3.2
  * http://jquery.com/
