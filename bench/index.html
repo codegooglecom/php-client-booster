@@ -2,7 +2,7 @@
 onload = function(){    
     for(var
         bench = {
-            cache:false,
+            cache:true,
             result:{},
             queue:[],
             frame:document.getElementsByTagName("iframe")[0],
@@ -34,8 +34,8 @@ onload = function(){
             }
         },
         info = [
-            {src:"../client/?file=js/jQuery.js&",name:"PHP Client Booster"},
             {src:"../client/js/jQuery.js.src.txt?",name:"Plain Text"},
+            {src:"../client/?file=js/jQuery.js&",name:"PHP Client Booster"},
             {src:"jQuery.php?",name:"ob_start('ob_gzhandler')"}
         ],
         i = 0, length = info.length;
@@ -46,5 +46,5 @@ onload = function(){
     bench.start();
 };
 </script>
-<iframe></iframe>
+<iframe style="display:none"></iframe>
 <pre id="result"></pre>
