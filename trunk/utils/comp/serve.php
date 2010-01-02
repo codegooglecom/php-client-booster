@@ -72,7 +72,7 @@ function utils_comp_serveFile($dest){
     // browser supports encoding?
     $HAE    = isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : '';
     // browser has sent an if_none_match header? (ETag related)
-    $HINM   = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? $_SERVER['HTTP_IF_NONE_MATCH'] : '';
+    $HINM   = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) : '';
     switch(true){
         // deflate is slightly bigger than gzip
         // but less problematic with older browsers
@@ -83,7 +83,6 @@ function utils_comp_serveFile($dest){
         // gzip or x-gzip for those browsers not
         // compatible with deflate (I guess not a single one but who knows ...)
         case strpos($HAE, 'gzip') !== false:
-        case strpos($HAE, 'x-gzip') !== false:
             $ext = 'gzip';
             break;
         // readers or alien browsers may not be compatible with compressed output

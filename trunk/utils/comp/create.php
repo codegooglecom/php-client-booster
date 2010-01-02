@@ -73,7 +73,7 @@ function utils_comp_createCompressedVersion($list, $dest, $options = array()){
 if(function_exists('file_put_contents')){
     function utils_comp_createFile($fileName, $ext, $output){
         file_put_contents($fileName.'.src.'.$ext, $output);
-        file_put_contents($fileName.'.sha1.'.$ext, sha1($output));
+        file_put_contents($fileName.'.sha1.'.$ext, '"'.sha1($output).'"');
     }
 } else {
     function utils_comp_createFile($fileName, $ext, $output){
@@ -82,7 +82,7 @@ if(function_exists('file_put_contents')){
         flock($fp, LOCK_UN);
         fclose($fp);
         flock($fp = fopen($fileName.'.sha1.'.$ext, 'wb'), LOCK_EX);
-        fwrite($fp, sha1($output));
+        fwrite($fp, '"'.sha1($output).'"');
         flock($fp, LOCK_UN);
         fclose($fp);
     }
